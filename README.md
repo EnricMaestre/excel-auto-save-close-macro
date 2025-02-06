@@ -1,38 +1,22 @@
-# excel-auto-save-close-macro
-Macro en VBA para guardar y cerrar automáticamente un archivo de Excel tras 5 minutos de inactividad.
-Attribute VB_Name = "AutoSaveCloseMacro"
-Dim TiempoInactivo As Date
+# 📊 Macro VBA: Guardar y Cerrar Excel Automáticamente
 
-Sub ReiniciarTemporizador()
-    On Error Resume Next
-    Application.OnTime EarliestTime:=TiempoInactivo, Procedure:="CerrarExcel", Schedule:=False
-    On Error GoTo 0
-    
-    TiempoInactivo = Now + TimeValue("00:05:00")
-    Application.OnTime EarliestTime:=TiempoInactivo, Procedure:="CerrarExcel", Schedule:=True
-End Sub
+Esta macro en VBA guarda y cierra automáticamente un archivo de Excel después de **5 minutos de inactividad**. Ideal para prevenir la pérdida de datos y mejorar la gestión de archivos en entornos de trabajo colaborativo.
 
-Sub CerrarExcel()
-    If Now >= TiempoInactivo Then
-        Application.DisplayAlerts = False
-        ThisWorkbook.Save
-        ThisWorkbook.Close
-        Application.DisplayAlerts = True
-    End If
-End Sub
+## 🚀 Características
+- Guarda automáticamente los cambios.
+- Cierra el archivo si no detecta actividad en 5 minutos.
+- Reinicia el temporizador con cada acción del usuario.
 
-Private Sub Workbook_Open()
-    ReiniciarTemporizador
-End Sub
+## ⚙️ Instalación
+1. Abre Excel y presiona `ALT + F11` para abrir el Editor de VBA.
+2. Haz clic en **Insertar > Módulo** y pega el contenido de `auto_save_close_macro.bas`.
+3. Guarda el archivo como `.xlsm` (Libro habilitado para macros).
+4. Asegúrate de habilitar las macros al abrir el archivo.
 
-Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range)
-    ReiniciarTemporizador
-End Sub
+## 📢 Requisitos
+- Excel habilitado para macros.
+- Guardar el archivo en formato `.xlsm`.
 
-Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal Target As Range)
-    ReiniciarTemporizador
-End Sub
+## 📄 Licencia
+Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
 
-Private Sub Workbook_SheetActivate(ByVal Sh As Object)
-    ReiniciarTemporizador
-End Sub
